@@ -21,6 +21,8 @@
     cofob-home = {
       url = "github:cofob/nixos";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.agenix.follows = "agenix";
+      inputs.home-manager.follows = "home-manager";
     };
   };
 
