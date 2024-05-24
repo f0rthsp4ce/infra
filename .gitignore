@@ -1,0 +1,6 @@
+.direnv
+*.key
+*.crt
+result
+key
+certs/
