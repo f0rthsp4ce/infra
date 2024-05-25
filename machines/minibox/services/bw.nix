@@ -7,6 +7,7 @@
   services.vaultwarden = {
     enable = true;
     dbBackend = "sqlite";
+    backupDir = "/var/backup/vaultwarden";
     environmentFile = config.age.secrets.credentials-vaultwarden.path;
     config = {
       domain = "https://bitwarden.f0rth.space:1337";

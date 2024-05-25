@@ -47,16 +47,16 @@ in {
           set -e
           set -x
 
-          name='/tmp/${networking.hostName}-${timer}-telegram-backup.zip'
+          name='/tmp/${config.networking.hostName}-${timer}-telegram-backup.zip'
 
           rm $name || true
           zip -9r "$name" ${toString paths}
-          gpg --no-tty --keyserver keys.openpgp.org --recv-keys "${
+          gpg --no-tty --keyserver keys.openpgp.org --recv-keys ${
             toString cfg.gpgKeys
-          }"
-          gpg --batch --trust-model always -o "$name.gpg" --encrypt "${
-            map (key: "-r ${key}") cfg.gpgKeys
-          }" "$name"
+          }
+          gpg --batch --trust-model always -o "$name.gpg" --encrypt ${
+            toString (map (key: "-r ${key} ") cfg.gpgKeys)
+          } "$name"
 
           file_size=$(stat --printf="%s" "$name.gpg")
           chunk_size=$((49*1024*1024))  # 49 megabytes
@@ -65,12 +65,12 @@ in {
               split -b "$chunk_size" "$name.gpg" "$name.gpg.part"
 
               for part_file in $name.gpg.part*; do
-                  curl -F document=@"$part_file" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID&caption=${networking.hostName}"
+                  curl -F document=@"$part_file" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID&caption=${config.networking.hostName}"
               done
 
               rm "$name.gpg.part"*
           else
-              curl -F document=@"$name.gpg" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID&caption=${networking.hostName}"
+              curl -F document=@"$name.gpg" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID&caption=${config.networking.hostName}"
           fi
 
           rm "$name" "$name.gpg" || true
@@ -78,11 +78,13 @@ in {
         startAt = timer;
       };
     }) cfg.timers;
-  in mkIf cfg.enable ((mkIf cfg.enable-defaults {
-    age.secrets.credentials-telegram-backup.file =
-      ../secrets/credentials/telegram-backup.age;
-  }) // {
+  in mkIf cfg.enable {
+    age.secrets = mkIf cfg.enable-defaults {
+      credentials-telegram-backup.file =
+        ../secrets/credentials/telegram-backup.age;
+    };
+
     systemd.services =
       (builtins.listToAttrs (map (key: getAttr key obj) (attrNames obj)));
-  });
+  };
 }
