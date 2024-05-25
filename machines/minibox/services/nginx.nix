@@ -18,6 +18,10 @@ in {
     virtualHosts."minibox-portainer.lo.f0rth.space" = defaults // {
       locations."/".proxyPass = "https://127.0.0.1:9443";
     };
+
+    virtualHosts."bitwarden.lo.f0rth.space" = defaults // {
+      locations."/".proxyPass = "http://127.0.0.1:8222/";
+    };
   };
 
   networking.firewall = {

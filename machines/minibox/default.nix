@@ -15,6 +15,8 @@
 
   virtualisation.docker.enable = true;
 
+  services.telegram-backup.enable = true;
+
   networking.firewall.allowedTCPPorts = [
     22 # ssh
   ];

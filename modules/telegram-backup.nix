@@ -8,9 +8,11 @@ in {
     services.telegram-backup = {
       enable = mkEnableOption "Whether to enable telegram backups";
 
-      gpgKey = mkOption {
-        type = types.str;
-        default = "5F3D9D3DECE08651DE14D29FACAD4265E193794D";
+      enable-defaults = mkEnableOption "Whether to add default secret config";
+
+      gpgKeys = mkOption {
+        type = types.listOf types.str;
+        default = [ "5F3D9D3DECE08651DE14D29FACAD4265E193794D" ];
         description = "Encryption key";
       };
 
@@ -41,12 +43,16 @@ in {
           set -e
           set -x
 
-          name='/tmp/${timer}-telegram-backup.zip'
+          name='/tmp/${networking.hostName}-${timer}-telegram-backup.zip'
 
           rm $name || true
           zip -9r "$name" ${toString paths}
-          gpg --no-tty --keyserver keys.openpgp.org --recv-keys "${cfg.gpgKey}"
-          gpg --batch --trust-model always -o "$name.gpg" --encrypt -r "${cfg.gpgKey}" "$name"
+          gpg --no-tty --keyserver keys.openpgp.org --recv-keys "${
+            toString cfg.gpgKeys
+          }"
+          gpg --batch --trust-model always -o "$name.gpg" --encrypt "${
+            map (key: "-r ${key}") cfg.gpgKeys
+          }" "$name"
 
           file_size=$(stat --printf="%s" "$name.gpg")
           chunk_size=$((49*1024*1024))  # 49 megabytes
@@ -55,12 +61,12 @@ in {
               split -b "$chunk_size" "$name.gpg" "$name.gpg.part"
 
               for part_file in $name.gpg.part*; do
-                  curl -F document=@"$part_file" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID"
+                  curl -F document=@"$part_file" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID&caption=${networking.hostName}"
               done
 
               rm "$name.gpg.part"*
           else
-              curl -F document=@"$name.gpg" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID"
+              curl -F document=@"$name.gpg" "https://api.telegram.org/bot$TOKEN/sendDocument?chat_id=$CHAT_ID&caption=${networking.hostName}"
           fi
 
           rm "$name" "$name.gpg" || true
@@ -68,10 +74,10 @@ in {
         startAt = timer;
       };
     }) cfg.timers;
-  in mkIf cfg.enable ({
+  in mkIf cfg.enable ((mkIf cfg.enable-defaults {
     age.secrets.credentials-telegram-backup.file =
       ../secrets/credentials/telegram-backup.age;
-  } // {
+  }) // {
     systemd.services =
       (builtins.listToAttrs (map (key: getAttr key obj) (attrNames obj)));
   });
