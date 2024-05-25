@@ -9,7 +9,7 @@
     dbBackend = "sqlite";
     environmentFile = config.age.secrets.credentials-vaultwarden.path;
     config = {
-      domain = "https://bitwarden.lo.f0rth.space";
+      domain = "https://bitwarden.f0rth.space:1337";
       signupsAllowed = true;
       rocketPort = 8222;
       rocketAddress = "127.0.0.1";
