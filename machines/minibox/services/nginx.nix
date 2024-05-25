@@ -32,7 +32,11 @@ in {
     };
 
     virtualHosts."bitwarden.f0rth.space" = defaults // public // {
-      locations."/".proxyPass = "http://127.0.0.1:8222/";
+      locations."/".proxyPass = "http://127.0.0.1:8222";
+    };
+
+    virtualHosts."wiki.f0rth.space" = defaults // public // {
+      locations."/".proxyPass = "http://127.0.0.1:3000";
     };
   };
 
