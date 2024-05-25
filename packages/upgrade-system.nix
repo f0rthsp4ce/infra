@@ -8,5 +8,5 @@ writeScriptBin "upgrade-system" ''
     branch="main"
   fi
 
-  sudo nixos-rebuild switch --flake "github:xdettlaff/f0rthsp4ce-infra/$branch"
+  sudo nixos-rebuild switch --flake "github:f0rthsp4ce/infra/$branch"
 ''
