@@ -11,6 +11,14 @@ let
     sslCertificateKey =
       "${config.security.acme.certs."f0rth.space".directory}/key.pem";
   };
+
+  public = {
+    listen = [{
+      addr = "0.0.0.0";
+      port = 1337;
+      ssl = true;
+    }];
+  };
 in {
   services.nginx = {
     enable = true;
@@ -23,12 +31,7 @@ in {
       locations."/".return = "https://bitwarden.f0rth.space:1337$request_uri";
     };
 
-    virtualHosts."bitwarden.f0rth.space" = defaults // {
-      listen = [{
-        addr = "0.0.0.0";
-        port = 1337;
-        ssl = true;
-      }];
+    virtualHosts."bitwarden.f0rth.space" = defaults // public // {
       locations."/".proxyPass = "http://127.0.0.1:8222/";
     };
   };
