@@ -8,7 +8,11 @@ in {
     services.telegram-backup = {
       enable = mkEnableOption "Whether to enable telegram backups";
 
-      enable-defaults = mkEnableOption "Whether to add default secret config";
+      enable-defaults = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to add default secret config";
+      };
 
       gpgKeys = mkOption {
         type = types.listOf types.str;
