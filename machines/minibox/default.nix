@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, config, ... }:
 
 {
   imports = [
@@ -10,6 +10,7 @@
 
   security.acme.certs."f0rth.space" = {
     extraDomainNames = [ "*.f0rth.space" "*.lo.f0rth.space" ];
+    group = config.services.nginx.group;
   };
 
   virtualisation.docker.enable = true;

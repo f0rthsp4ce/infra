@@ -1,5 +1,5 @@
 { ... }:
 
 {
-  imports = [ ];
+  imports = [ ./nginx.nix ./portainer.nix ];
 }

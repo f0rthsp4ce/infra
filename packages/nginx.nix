@@ -1,4 +1,4 @@
-{ lib, nginxQuic, nginxModules }:
+{ lib, nginxQuic, nginxModules, ... }:
 
 nginxQuic.override {
   modules =
