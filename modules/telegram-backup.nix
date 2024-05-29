@@ -16,7 +16,7 @@ in {
 
       gpgKeys = mkOption {
         type = types.listOf types.str;
-        default = [ "5F3D9D3DECE08651DE14D29FACAD4265E193794D" ];
+        default = [ "04EEF0BA3B857B065A326067341A36929AC4AC29" ];
         description = "Encryption key";
       };
 
