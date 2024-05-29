@@ -1,6 +1,6 @@
 {
   cofob = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIETMEzhigdZelWae3V4tQ7/LXsub39SRG2X+jPMeoHMx"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJsSKOtKRM9+bvCs6iioOrcayMdsdwaQN/lJAQJkXE+w"
   ];
   dettlaff = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAM0EtUB3ZtA1Y37qiwNUNAbEbF6sn9ZVg4AW++SmuOu"
