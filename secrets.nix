@@ -21,4 +21,6 @@ in {
   "secrets/credentials/cloudflare.age".publicKeys = users ++ [ minibox ];
   "secrets/credentials/telegram-backup.age".publicKeys = all;
   "secrets/credentials/vaultwarden.age".publicKeys = users ++ [ minibox ];
+  "secrets/credentials/minibox-cloudflared.age".publicKeys = users
+    ++ [ minibox ];
 }
