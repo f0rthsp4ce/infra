@@ -17,6 +17,8 @@
 
   services.telegram-backup.enable = true;
 
+  services.tailscale.enable = true;
+
   networking.firewall.allowedTCPPorts = [
     22 # ssh
   ];
