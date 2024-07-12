@@ -19,4 +19,8 @@
 
   services.telegram-backup.timers.hourly =
     [ config.services.vaultwarden.backupDir ];
+  services.proxmox-backup.jobs.daily.paths = [{
+    name = "vaultwarden";
+    path = config.services.vaultwarden.backupDir;
+  }];
 }

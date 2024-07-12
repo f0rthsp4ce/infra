@@ -12,6 +12,7 @@
     ./overlays.nix
     ./ssh.nix
     ./telegram-backup.nix
+    ./proxmox-backup.nix
     ./users.nix
   ];
 }
