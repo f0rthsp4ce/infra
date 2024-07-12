@@ -54,6 +54,14 @@ in {
       locations."/".proxyPass = "http://127.0.0.1:8222";
     };
 
+    virtualHosts."grafana.lo.f0rth.space" = defaults // {
+      locations."/".proxyPass = "http://127.0.0.1:3001";
+    };
+
+    virtualHosts."prometheus.lo.f0rth.space" = defaults // {
+      locations."/".proxyPass = "http://127.0.0.1:9090";
+    };
+
     # virtualHosts."wiki.f0rth.space" = defaults // public // {
     #   locations."/".proxyPass = "http://127.0.0.1:3000";
     # };
