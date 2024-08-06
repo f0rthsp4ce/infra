@@ -56,6 +56,12 @@
     };
   };
 
+
+  networking.firewall.allowedTCPPorts = [
+    42777 # v1
+    42776 # v0
+  ];
+
   services.proxmox-backup.jobs.daily.paths = [{
     name = "f0rthsp4ce-bot";
     path = "/var/lib/f0rthsp4ce-bot";
