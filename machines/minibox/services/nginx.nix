@@ -64,8 +64,18 @@ in {
 
     virtualHosts."ha.lo.f0rth.space" = defaults // {
       locations."/" = {
+        recommendedProxySettings = false;
         proxyPass = "http://ha-direct.lo.f0rth.space:8123";
         proxyWebsockets = true;
+        extraConfig = ''
+          proxy_set_header        Host $host;
+          proxy_set_header        X-Real-IP $remote_addr;
+          # Home Assistant doesn't work correctly with the X-Forwarded-Proto header
+          # proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header        X-Forwarded-Proto $scheme;
+          proxy_set_header        X-Forwarded-Host $host;
+          proxy_set_header        X-Forwarded-Server $host;
+        '';
       };
     };
 
