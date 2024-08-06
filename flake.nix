@@ -24,6 +24,15 @@
       inputs.agenix.follows = "agenix";
       inputs.home-manager.follows = "home-manager";
     };
+
+    botka-v0 = {
+      url = "github:f0rthsp4ce/botka/4ada593690610da9a7105913c9564b9f673c267e";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    botka-v1 = {
+      url = "github:f0rthsp4ce/botka";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, flake-utils, agenix, deploy-rs, ... }@attrs:

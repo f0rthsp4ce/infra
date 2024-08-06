@@ -2,6 +2,7 @@
   cofob = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJsSKOtKRM9+bvCs6iioOrcayMdsdwaQN/lJAQJkXE+w cofob@yubi"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAzB+g6qthKy95lG3UxnikrHCaVZ9O9njEqzdCIIfXxL cofob@twinkpad"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIETMEzhigdZelWae3V4tQ7/LXsub39SRG2X+jPMeoHMx cofob@deprecated-key"
   ];
   dettlaff = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAM0EtUB3ZtA1Y37qiwNUNAbEbF6sn9ZVg4AW++SmuOu"

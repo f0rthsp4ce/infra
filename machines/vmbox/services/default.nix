@@ -1,0 +1,5 @@
+{ ... }:
+
+{
+  imports = [ ./telegram-bot.nix ];
+}

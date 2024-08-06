@@ -146,7 +146,8 @@ in {
             } \
             ${builtins.toString conf.additionalFlags} \
             ${
-              builtins.toString (map (p: "${p.name}.${p.type}:${p.path}") conf.paths)
+              builtins.toString
+              (map (p: "${p.name}.${p.type}:${p.path}") conf.paths)
             }
         '';
         startAt = if conf.startAt != null then conf.startAt else name;

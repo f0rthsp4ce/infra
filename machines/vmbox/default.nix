@@ -5,7 +5,7 @@
     ./services
 
     "${self}/modules"
-    "${self}/hardware/minibox.nix"
+    "${self}/hardware/vmbox.nix"
   ];
 
   custom.backup-defaults.enable = true;
@@ -15,7 +15,7 @@
   ];
 
   networking = {
-    hostName = "minibox";
+    hostName = "vmbox";
     networkmanager.enable = true;
   };
 }

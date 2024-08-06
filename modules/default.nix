@@ -13,6 +13,7 @@
     ./ssh.nix
     ./telegram-backup.nix
     ./proxmox-backup.nix
+    ./backup-defaults.nix
     ./users.nix
   ];
 }

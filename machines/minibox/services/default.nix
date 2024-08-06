@@ -3,7 +3,6 @@
 {
   imports = [
     ./acme.nix
-    ./backup.nix
     ./bw.nix
     ./docker.nix
     ./nginx.nix

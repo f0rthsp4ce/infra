@@ -1,20 +1,20 @@
-{ config, home-manager, cofob-home, ... }:
+{ config, self, home-manager, cofob-home, ... }:
 
-let user-keys = import ../ssh-keys.nix;
+let user-keys = import "${self}/ssh-keys.nix";
 in {
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 
   home-manager.users.cofob = cofob-home.nixosModules.home-headless;
-  home-manager.users.def = import ../home/def;
-  home-manager.users.tar = import ../home/tar;
-  home-manager.users.mike = import ../home/mike;
+  home-manager.users.def = import "${self}/home/def";
+  home-manager.users.tar = import "${self}/home/tar";
+  home-manager.users.mike = import "${self}/home/mike";
 
-  age.secrets.password-root.file = ../secrets/passwords/root.age;
-  age.secrets.password-cofob.file = ../secrets/passwords/cofob.age;
-  age.secrets.password-def.file = ../secrets/passwords/def.age;
-  age.secrets.password-tar.file = ../secrets/passwords/tar.age;
-  age.secrets.password-mike.file = ../secrets/passwords/mike.age;
+  age.secrets.password-root.file = "${self}/secrets/passwords/root.age";
+  age.secrets.password-cofob.file = "${self}/secrets/passwords/cofob.age";
+  age.secrets.password-def.file = "${self}/secrets/passwords/def.age";
+  age.secrets.password-tar.file = "${self}/secrets/passwords/tar.age";
+  age.secrets.password-mike.file = "${self}/secrets/passwords/mike.age";
 
   users = {
     users = {
