@@ -63,7 +63,10 @@ in {
     };
 
     virtualHosts."ha.lo.f0rth.space" = defaults // {
-      locations."/".proxyPass = "http://ha-direct.lo.f0rth.space:8123";
+      locations."/" = {
+        proxyPass = "http://ha-direct.lo.f0rth.space:8123";
+        proxyWebsockets = true;
+      };
     };
 
     virtualHosts."homeassistant.lo.f0rth.space" = defaults // {
