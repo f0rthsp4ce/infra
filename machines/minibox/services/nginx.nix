@@ -62,6 +62,14 @@ in {
       locations."/".proxyPass = "http://127.0.0.1:9090";
     };
 
+    virtualHosts."ha.lo.f0rth.space" = defaults // {
+      locations."/".proxyPass = "http://ha-direct.lo.f0rth.space:8123";
+    };
+
+    virtualHosts."homeassistant.lo.f0rth.space" = defaults // {
+      globalRedirect = "ha.lo.f0rth.space";
+    };
+
     # virtualHosts."wiki.f0rth.space" = defaults // public // {
     #   locations."/".proxyPass = "http://127.0.0.1:3000";
     # };
