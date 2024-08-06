@@ -58,7 +58,7 @@ in {
                   };
 
                   name = mkOption {
-                    type = types.strMatching "^[a-zA-Z_-]+$";
+                    type = types.strMatching "^[a-zA-Z0-9_-]+$";
                     description = "Archive name";
                   };
 
