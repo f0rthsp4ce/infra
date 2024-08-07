@@ -2,7 +2,7 @@
   description = "f0rthsp4ce server configs";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
     flake-utils.url = "github:numtide/flake-utils";
 
@@ -12,7 +12,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -85,7 +85,7 @@
       in {
         devShells.default = pkgs.mkShell {
           buildInputs =
-            [ agenix.packages.${system}.default pkgs.nixfmt pkgs.deploy-rs ];
+            [ agenix.packages.${system}.default pkgs.nixfmt-classic pkgs.deploy-rs ];
         };
 
         packages = {
