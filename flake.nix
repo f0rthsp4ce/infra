@@ -84,8 +84,11 @@
         };
       in {
         devShells.default = pkgs.mkShell {
-          buildInputs =
-            [ agenix.packages.${system}.default pkgs.nixfmt-classic pkgs.deploy-rs ];
+          buildInputs = [
+            agenix.packages.${system}.default
+            pkgs.nixfmt-classic
+            pkgs.deploy-rs
+          ];
         };
 
         packages = {
