@@ -56,7 +56,6 @@
     };
   };
 
-
   networking.firewall.allowedTCPPorts = [
     42777 # v1
     42776 # v0
