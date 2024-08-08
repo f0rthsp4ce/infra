@@ -35,14 +35,6 @@ let
       config.security.acme.certs."f0rth.space".directory
     }/key.pem";
   '';
-
-  # public = {
-  #   listen = [{
-  #     addr = "0.0.0.0";
-  #     port = 1337;
-  #     ssl = true;
-  #   }];
-  # };
 in {
   users.users.cloudflared = {
     group = "cloudflared";
@@ -266,10 +258,6 @@ in {
         }
       '';
     };
-
-    # virtualHosts."wiki.f0rth.space" = defaults // public // {
-    #   locations."/".proxyPass = "http://127.0.0.1:3000";
-    # };
   };
 
   networking.firewall = {
