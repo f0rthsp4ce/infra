@@ -133,6 +133,8 @@ in {
       # Allowed args:
       # - -nph - Do not pass the X-Forwarded-Proto, X-Real-IP, and X-Forwarded-For headers
       # - -h - Use HTTPS instead of HTTP
+      # - -nh - Use HTTP instead of HTTPS
+      # - -ro - Remove the Origin header
       serverName =
         "~^(?<subdomain>[a-zA-Z0-9-]+?)(-(?<port>\\d+))?(-(?<args>[a-z-]+))?\\.secure\\.f0rth\\.space$";
       # Configure proxy
@@ -153,16 +155,16 @@ in {
           }
 
           # Fail if the subdomain is not supported
-          set $fail_string "";
-          if ($subdomain ~* "ender3") {
-            set $fail_string "Ender3 does not support secure proxiyng";
-          }
-          if ($args ~* "-su") {
-            set $fail_string "";
-          }
-          if ($fail_string) {
-            return 400 $fail_string;
-          }
+          # set $fail_string "";
+          # if ($subdomain ~* "ender3") {
+          #   set $fail_string "Ender3 does not support secure proxiyng";
+          # }
+          # if ($args ~* "-su") {
+          #   set $fail_string "";
+          # }
+          # if ($fail_string) {
+          #   return 400 $fail_string;
+          # }
 
           # Include the Authelia authrequest configuration
           include ${self}/modules/nginx-snippets/authelia-authrequest.conf;
@@ -223,6 +225,20 @@ in {
           proxy_set_header X-Forwarded-Proto $modified_scheme;
           proxy_set_header X-Real-IP $modified_remote_addr;
 
+          # Remove origin header from request
+          set $remove_origin false;
+          if ($subdomain ~* "ender3") {
+            set $remove_origin true;
+          }
+          if ($args ~* "-ro") {
+            set $remove_origin true;
+          }
+          set $remove_origin_content "";
+          if ($remove_origin = false) {
+            set $remove_origin_content $http_origin;
+          }
+          proxy_set_header Origin $remove_origin_content;
+
           # Add debug headers
           add_header X-Proxy-Host $domain;
           add_header X-Proxy-Port $proxy_port;
@@ -230,6 +246,7 @@ in {
           add_header X-Proxy-Subdomain $subdomain;
           add_header X-Proxy-Args $args;
           add_header X-Proxy-NPH $nph;
+          add_header X-Proxy-Remove-Origin $remove_origin;
 
           # Allow the use of WebSockets
           proxy_http_version 1.1;
