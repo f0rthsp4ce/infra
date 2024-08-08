@@ -10,5 +10,6 @@
     ./tailscale.nix
     ./dyndns.nix
     ./autodns.nix
+    ./uptime.nix
   ];
 }
