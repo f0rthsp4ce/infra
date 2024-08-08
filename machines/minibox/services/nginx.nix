@@ -12,6 +12,24 @@ let
       "${config.security.acme.certs."f0rth.space".directory}/key.pem";
   };
 
+  proxy = {
+    # Requests coming via the proxy protocol without SSL termination
+    listen = [{
+      addr = "100.110.43.32";
+      port = 8443;
+      ssl = true;
+      proxyProtocol = true;
+    }];
+  };
+  proxy-extra-config = ''
+    # Set the real IP from the proxy protocol
+    set_real_ip_from 100.83.232.109;
+    real_ip_header proxy_protocol;
+    # Set SSL certificates
+    ssl_certificate "${config.security.acme.certs."f0rth.space".directory}/fullchain.pem";
+    ssl_certificate_key "${config.security.acme.certs."f0rth.space".directory}/key.pem";
+  '';
+
   # public = {
   #   listen = [{
   #     addr = "0.0.0.0";
@@ -87,15 +105,34 @@ in {
       locations."/".proxyPass = "https://localhost:6443";
     };
 
-    virtualHosts."*.secure.f0rth.space" = defaults // {
+    virtualHosts."enter.f0rth.space" = proxy // {
+      locations."/".proxyPass = "http://localhost:9091";
+      extraConfig = proxy-extra-config;
+    };
+
+    virtualHosts."wiki.f0rth.space" = proxy // {
+      locations."/".proxyPass = "http://localhost:3000";
+      extraConfig = proxy-extra-config;
+    };
+
+    virtualHosts."bitwarden.f0rth.space" = proxy // {
+      locations."/".proxyPass = "http://localhost:8222";
+      extraConfig = proxy-extra-config;
+    };
+
+    virtualHosts."*.secure.f0rth.space" = proxy // {
       # <subdomain>-<port>-<args>.secure.f0rth.space
       # Redirects to <subdomain>.lo.f0rth.space:<port> with optional args
       #
       # Allowed args:
       # - -nph - Do not pass the X-Forwarded-Proto, X-Real-IP, and X-Forwarded-For headers
       # - -h - Use HTTPS instead of HTTP
-      serverName = ''~^(?<subdomain>[a-zA-Z0-9-]+?)(-(?<port>\d+))?(-(?<args>[nph-]+))?\.secure\.f0rth\.space$'';
+      serverName =
+        "~^(?<subdomain>[a-zA-Z0-9-]+?)(-(?<port>\\d+))?(-(?<args>[nph-]+))?\\.secure\\.f0rth\\.space$";
+      # Configure proxy
       extraConfig = ''
+        ${proxy-extra-config}
+
         # Local DNS resolver for dynamic domains
         resolver 127.0.0.1;
 
@@ -156,6 +193,13 @@ in {
           proxy_set_header Connection "upgrade";
           proxy_read_timeout 86400;
 
+          # Disable compression
+          proxy_set_header Accept-Encoding "";
+
+          # Replace host in response to the domain
+          sub_filter_once off;
+          sub_filter $domain $host;
+
           # Proxy the request to the target
           proxy_pass $proxy;
         }
@@ -171,4 +215,6 @@ in {
     allowedTCPPorts = [ 80 443 ];
     allowedUDPPorts = [ 443 ];
   };
+  # Allow requests to proxy protocol listen from proxy
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [ 8443 ];
 }
