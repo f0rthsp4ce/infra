@@ -22,12 +22,18 @@ let
     }];
   };
   proxy-extra-config = ''
+    # Enable http2
+    http2 on;
     # Set the real IP from the proxy protocol
     set_real_ip_from 100.83.232.109;
     real_ip_header proxy_protocol;
     # Set SSL certificates
-    ssl_certificate "${config.security.acme.certs."f0rth.space".directory}/fullchain.pem";
-    ssl_certificate_key "${config.security.acme.certs."f0rth.space".directory}/key.pem";
+    ssl_certificate "${
+      config.security.acme.certs."f0rth.space".directory
+    }/fullchain.pem";
+    ssl_certificate_key "${
+      config.security.acme.certs."f0rth.space".directory
+    }/key.pem";
   '';
 
   # public = {
