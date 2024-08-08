@@ -14,6 +14,7 @@
     description = "Dynamic DNS updater for Cloudflare";
     wantedBy = [ "multi-user.target" ];
     after = [ "network.target" ];
+    environment.PYTHONUNBUFFERED = "1";
     serviceConfig = {
       Type = "simple";
       ExecStart = "${pkgs.dyndns-cloudflare}/bin/dyndns-cloudflare";

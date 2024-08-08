@@ -22,6 +22,7 @@ in {
   # Services
   "secrets/credentials/cloudflare.age".publicKeys = users ++ [ minibox ];
   "secrets/credentials/dyndns-cloudflare.age".publicKeys = users ++ [ minibox ];
+  "secrets/credentials/autodns-cloudflare.age".publicKeys = users ++ [ minibox ];
   "secrets/credentials/telegram-backup.age".publicKeys = all;
   "secrets/credentials/proxmox-backup/env.age".publicKeys = all;
   "secrets/credentials/proxmox-backup/key.age".publicKeys = all;

@@ -9,5 +9,6 @@
     ./portainer.nix
     ./tailscale.nix
     ./dyndns.nix
+    ./autodns.nix
   ];
 }
