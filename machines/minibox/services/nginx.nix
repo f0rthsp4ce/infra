@@ -134,7 +134,7 @@ in {
       # - -nph - Do not pass the X-Forwarded-Proto, X-Real-IP, and X-Forwarded-For headers
       # - -h - Use HTTPS instead of HTTP
       serverName =
-        "~^(?<subdomain>[a-zA-Z0-9-]+?)(-(?<port>\\d+))?(-(?<args>[nph-]+))?\\.secure\\.f0rth\\.space$";
+        "~^(?<subdomain>[a-zA-Z0-9-]+?)(-(?<port>\\d+))?(-(?<args>[a-z-]+))?\\.secure\\.f0rth\\.space$";
       # Configure proxy
       extraConfig = ''
         ${proxy-extra-config}
@@ -147,18 +147,45 @@ in {
         include ${self}/modules/nginx-snippets/authelia-location.conf;
 
         location / {
+          # Redirect to hosted domain, if it exists
+          if ($subdomain ~* "bitwarden") {
+            return 301 https://$subdomain.f0rth.space$request_uri;
+          }
+
+          # Fail if the subdomain is not supported
+          set $fail_string "";
+          if ($subdomain ~* "ender3") {
+            set $fail_string "Ender3 does not support secure proxiyng";
+          }
+          if ($args ~* "-su") {
+            set $fail_string "";
+          }
+          if ($fail_string) {
+            return 400 $fail_string;
+          }
+
           # Include the Authelia authrequest configuration
           include ${self}/modules/nginx-snippets/authelia-authrequest.conf;
 
-          # Set the scheme to http by default
-          set $proxy_scheme http;
+          # Set the proxy scheme by mapping of subdomain to overrides
+          set $proxy_scheme "http";
+          if ($subdomain ~* "ldapadmin|ha|prometheus|grafana|minibox-portainer") {
+            set $proxy_scheme "https";
+          }
+          # If the -nh flag is specified, set the scheme to http
+          if ($args ~* "-nh") {
+            set $proxy_scheme http;
+          }
           # If the -h flag is specified, set the scheme to https
           if ($args ~* "-h") {
             set $proxy_scheme https;
           }
 
-          # Set the port to an empty string by default
+          # Set the port by mapping of subdomain to port overrides
           set $proxy_port "";
+          if ($subdomain ~* "ha-direct") {
+            set $proxy_port ":8123";
+          }
           # If the port is specified, set it
           if ($port) {
             set $proxy_port ":$port";
@@ -171,18 +198,21 @@ in {
           # Set the Host header to the domain
           proxy_set_header Host $domain;
 
-          # Add debug headers
-          add_header X-Proxy-Host $domain;
-          add_header X-Proxy-Port $proxy_port;
-          add_header X-Proxy-Scheme $proxy_scheme;
-          add_header X-Proxy-Subdomain $subdomain;
-          add_header X-Proxy-Args $args;
-
           # Prepare optional headers
           set $modified_proxy_add_x_forwarded_for $proxy_add_x_forwarded_for;
           set $modified_scheme $scheme;
           set $modified_remote_addr $remote_addr;
+
+          # Remove proxy headers by mapping of subdomain to overrides
+          set $nph false;
+          if ($subdomain ~* "ha-direct") {
+            set $nph true;
+          }
+          # If the -nph flag is specified, remove the headers
           if ($args ~* "-nph") {
+            set $nph true;
+          }
+          if ($nph) {
             set $modified_proxy_add_x_forwarded_for "";
             set $modified_scheme "";
             set $modified_remote_addr "";
@@ -192,6 +222,14 @@ in {
           proxy_set_header X-Forwarded-For $modified_proxy_add_x_forwarded_for;
           proxy_set_header X-Forwarded-Proto $modified_scheme;
           proxy_set_header X-Real-IP $modified_remote_addr;
+
+          # Add debug headers
+          add_header X-Proxy-Host $domain;
+          add_header X-Proxy-Port $proxy_port;
+          add_header X-Proxy-Scheme $proxy_scheme;
+          add_header X-Proxy-Subdomain $subdomain;
+          add_header X-Proxy-Args $args;
+          add_header X-Proxy-NPH $nph;
 
           # Allow the use of WebSockets
           proxy_http_version 1.1;
