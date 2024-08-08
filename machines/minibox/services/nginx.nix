@@ -119,7 +119,7 @@ in {
     };
 
     virtualHosts."*.secure.f0rth.space" = proxy // {
-      # <subdomain>-<port>-<args>.secure.f0rth.space
+      # <subdomain>--<port>-<args>.secure.f0rth.space
       # Redirects to <subdomain>.lo.f0rth.space:<port> with optional args
       #
       # Allowed args:
@@ -128,7 +128,7 @@ in {
       # - -nh - Use HTTP instead of HTTPS
       # - -ro - Remove the Origin header
       serverName =
-        "~^(?<subdomain>[a-zA-Z0-9-]+?)(-(?<port>\\d+))?(-(?<args>[a-z-]+))?\\.secure\\.f0rth\\.space$";
+        "~^(?<subdomain>[a-zA-Z0-9-]+?)(--(?<port>\\d+))?(-(?<args>[a-z-]+))?\\.secure\\.f0rth\\.space$";
       # Configure proxy
       extraConfig = ''
         ${proxy-extra-config}
