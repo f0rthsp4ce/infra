@@ -8,5 +8,6 @@
     ./nginx.nix
     ./portainer.nix
     ./tailscale.nix
+    ./dyndns.nix
   ];
 }
