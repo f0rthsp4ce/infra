@@ -74,7 +74,7 @@ def update_cloudflare_dns(devices: list[Device]):
                         "type": "A",
                         "name": record_name,
                         "content": record_ip,
-                        "ttl": 120,
+                        "ttl": 300,
                         "comment": "@managed by auto-update script",
                     },
                 )
@@ -88,7 +88,7 @@ def update_cloudflare_dns(devices: list[Device]):
                         "type": "A",
                         "name": record_name,
                         "content": record_ip,
-                        "ttl": 120,
+                        "ttl": 300,
                         "comment": "@managed by auto-update script",
                     },
                 )
