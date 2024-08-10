@@ -25,7 +25,7 @@ let
     # Enable http2
     http2 on;
     # Set the real IP from the proxy protocol
-    set_real_ip_from 100.83.232.109;
+    set_real_ip_from 100.64.0.1;
     real_ip_header proxy_protocol;
     # Set SSL certificates
     ssl_certificate "${
