@@ -62,6 +62,71 @@ in {
   services.nginx = {
     enable = true;
 
+    virtualHosts."not_found" = {
+      listen = [
+        {
+          addr = "0.0.0.0";
+          port = 80;
+          extraParameters = [ "default_server" ];
+        }
+        {
+          addr = "[::0]";
+          port = 80;
+          extraParameters = [ "default_server" ];
+        }
+        {
+          addr = "0.0.0.0";
+          port = 443;
+          ssl = true;
+          extraParameters = [ "default_server" ];
+        }
+        {
+          addr = "[::0]";
+          port = 443;
+          ssl = true;
+          extraParameters = [ "default_server" ];
+        }
+        {
+          addr = "0.0.0.0";
+          port = 443;
+          extraParameters = [ "quic" "default_server" ];
+        }
+        {
+          addr = "[::0]";
+          port = 443;
+          extraParameters = [ "quic" "default_server" ];
+        }
+      ];
+      serverName = "_";
+      extraConfig = ''
+        http2 on;
+        http3 on;
+        http3_hq off;
+        ssl_certificate "${
+          config.security.acme.certs."f0rth.space".directory
+        }/fullchain.pem";
+        ssl_certificate_key "${
+          config.security.acme.certs."f0rth.space".directory
+        }/key.pem";
+        return 301 https://f0rth.space/not_found.html;
+      '';
+    };
+
+    virtualHosts."not_found_proxy" = {
+      listen = [{
+        addr = "100.64.0.2";
+        port = 8443;
+        ssl = true;
+        proxyProtocol = true;
+        extraParameters = [ "default_server" ];
+      }];
+      serverName = "_";
+      extraConfig = ''
+        ${proxy-extra-config}
+        return 301 https://f0rth.space/not_found.html;
+      '';
+    };
+
     virtualHosts."minibox-portainer.lo.f0rth.space" = defaults // {
       locations."/".proxyPass = "https://127.0.0.1:9443";
     };
