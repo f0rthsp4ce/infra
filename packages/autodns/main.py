@@ -4,6 +4,10 @@ from librouteros.exceptions import TrapError
 from dataclasses import dataclass
 from time import sleep
 from os import environ
+from logging import basicConfig, getLogger
+
+basicConfig(level=environ.get("LOG_LEVEL", "INFO"))
+logger = getLogger(__name__)
 
 
 @dataclass
@@ -44,8 +48,8 @@ def get_connected_devices() -> list[Device]:
             device_names.append(name)
             devices.append(Device(name=name, address=device["address"]))
         return devices
-    except TrapError as e:
-        print(f"Failed to connect to MikroTik: {e}")
+    except TrapError:
+        logger.exception("Failed to connect to MikroTik")
         return []
 
 
@@ -56,16 +60,20 @@ def update_cloudflare_dns(devices: list[Device]):
     for device in devices:
         record_name = f"{device.name}.lo.f0rth.space"
         record_ip = device.address
-        print(f"Processing {record_name}")
+        logger.debug(f"Processing {record_name}")
 
         if record_name in existing_hostnames:
             existing_record = existing_hostnames[record_name]
             if existing_record["content"] != record_ip:
-                if not existing_record["comment"].startswith("@managed"):
-                    print(f"Skipping DNS record {record_name}, reason: Not managed")
+                comment = existing_record.get("comment")
+                if not isinstance(comment, str):
+                    logger.debug(f"Skipping DNS record {record_name}, reason: No comment")
+                    continue
+                if not comment.startswith("@managed"):
+                    logger.debug(f"Skipping DNS record {record_name}, reason: Not managed")
                     continue
                 if existing_record["content"] == record_ip:
-                    print(f"DNS record {record_name} not changed")
+                    logger.debug(f"DNS record {record_name} not changed")
                 # Update the record if the IP has changed
                 cf.zones.dns_records.put(
                     CLOUDFLARE_ZONE_ID,
@@ -78,7 +86,7 @@ def update_cloudflare_dns(devices: list[Device]):
                         "comment": "@managed by auto-update script",
                     },
                 )
-                print(f"Updated DNS record: {record_name} -> {record_ip}")
+                logger.info(f"Updated DNS record: {record_name} -> {record_ip}")
         else:
             # Create a new record if it doesn't exist
             try:
@@ -92,9 +100,9 @@ def update_cloudflare_dns(devices: list[Device]):
                         "comment": "@managed by auto-update script",
                     },
                 )
-                print(f"Created DNS record: {record_name} -> {record_ip}")
-            except Exception as e:
-                print(f"Error: {e}")
+                logger.info(f"Created DNS record: {record_name} -> {record_ip}")
+            except Exception:
+                logger.exception(f"Failed to create DNS record: {record_name} -> {record_ip}")
 
 
 def main():
@@ -104,9 +112,9 @@ def main():
             if devices:
                 update_cloudflare_dns(devices)
             else:
-                print("No devices found.")
-        except Exception as e:
-            print(f"Error: {e}")
+                logger.warn("No devices found.")
+        except Exception:
+            logger.exception("An error occurred")
         sleep(600)
 
 
