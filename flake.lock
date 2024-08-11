@@ -59,16 +59,16 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla_2"
       },
       "locked": {
-        "lastModified": 1723336905,
-        "narHash": "sha256-yXkJnGmjhV3DBAnZr0s85I9eWW4oXCuKMc3p2XGM0Bk=",
-        "owner": "f0rthsp4ce",
+        "lastModified": 1723339188,
+        "narHash": "sha256-nZ4Dnb74n1AVj/FaD8ULuFOGDg+YZgr7MKDbEJd/fUk=",
+        "owner": "cofob",
         "repo": "botka",
-        "rev": "09c986ffc552d1d2bd575b2578831d4b9c1c6db0",
+        "rev": "2beeb21c32d4181dbf581a5fb4d1a680d3730419",
         "type": "github"
       },
       "original": {
-        "owner": "f0rthsp4ce",
-        "ref": "cofob/vortex-of-doom",
+        "owner": "cofob",
+        "ref": "cofob/cam-commands",
         "repo": "botka",
         "type": "github"
       }
