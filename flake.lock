@@ -59,15 +59,16 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla_2"
       },
       "locked": {
-        "lastModified": 1723340815,
-        "narHash": "sha256-AMLE7p8wEylQYHkb9RE5Y/ByHsTRK6+FqaRhznqkBQI=",
+        "lastModified": 1723408610,
+        "narHash": "sha256-ezLrK7hKSmzY7bjcb/AyXVjXjmVOiGo5kucmj9IA96o=",
         "owner": "f0rthsp4ce",
         "repo": "botka",
-        "rev": "14e1548ab1a94f0d46ed536f995268833f1e5d37",
+        "rev": "68bae044e031c3a8917acc747a266a0061733770",
         "type": "github"
       },
       "original": {
         "owner": "f0rthsp4ce",
+        "ref": "cofob/ldap",
         "repo": "botka",
         "type": "github"
       }

@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     botka-v1 = {
-      url = "github:f0rthsp4ce/botka";
+      url = "github:f0rthsp4ce/botka/cofob/ldap";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
