@@ -15,5 +15,6 @@
     ./proxmox-backup.nix
     ./backup-defaults.nix
     ./users.nix
+    ./f0runald
   ];
 }

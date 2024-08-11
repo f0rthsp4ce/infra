@@ -10,6 +10,8 @@
 
   custom.backup-defaults.enable = true;
 
+  services.f0runald.enable = true;
+
   networking.firewall.allowedTCPPorts = [
     22 # ssh
   ];
