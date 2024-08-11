@@ -30,7 +30,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     botka-v1 = {
-      url = "github:cofob/botka/cofob/cam-commands";
+      url = "github:f0rthsp4ce/botka";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

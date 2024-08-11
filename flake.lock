@@ -59,16 +59,15 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla_2"
       },
       "locked": {
-        "lastModified": 1723340407,
-        "narHash": "sha256-RQSvPP/CuJouSszqDknF3yP0EW7BgKZIGjtQOQqrqOE=",
-        "owner": "cofob",
+        "lastModified": 1723340815,
+        "narHash": "sha256-AMLE7p8wEylQYHkb9RE5Y/ByHsTRK6+FqaRhznqkBQI=",
+        "owner": "f0rthsp4ce",
         "repo": "botka",
-        "rev": "3e2949f291d4f8ac0873513378d3f6f5609cdfba",
+        "rev": "14e1548ab1a94f0d46ed536f995268833f1e5d37",
         "type": "github"
       },
       "original": {
-        "owner": "cofob",
-        "ref": "cofob/cam-commands",
+        "owner": "f0rthsp4ce",
         "repo": "botka",
         "type": "github"
       }
