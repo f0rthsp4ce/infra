@@ -8,7 +8,7 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCGY+yafid8DBeWFwXO5q/aSCgLvv726NKEO3KJeThC";
   vmbox =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOo7kizbOeCwa9smjSmkj4+nAfEJVun9b5T/MQ35zVF1";
-  systems = [ minibox ];
+  systems = [ minibox vmbox ];
 
   all = users ++ systems;
 in {
