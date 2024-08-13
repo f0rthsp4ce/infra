@@ -187,7 +187,7 @@ in {
       locations."/".return = "301 https://element.f0rth.space";
 
       locations."/_matrix/" = {
-        proxyPass = "http://localhost:8008";
+        proxyPass = "http://localhost:8008$request_uri";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_set_header Host $host;
