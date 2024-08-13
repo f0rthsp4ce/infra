@@ -25,7 +25,7 @@ in {
     };
   };
   systemd.services.dendrite.serviceConfig.ExecStart = lib.mkForce
-    "${pkgs.dendrite}/bin/dendrite --config ${config.age.secrets.credentials-dendrite-config.path}";
+    "${pkgs.dendrite}/bin/dendrite --config ${config.age.secrets.credentials-dendrite-config.path} -really-enable-open-registration";
 
   # Matrix bridge
   age.secrets.credentials-mautrix-telegram-config.file =
