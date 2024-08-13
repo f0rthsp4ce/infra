@@ -4,13 +4,13 @@ let db = "postgres:///dendrite?host=/run/postgresql";
 in {
   age.secrets.credentials-dendrite-private-key.file =
     "${self}/secrets/credentials/dendrite-private-key.age";
-  age.secrets.credentials-dendrite-private-key.owner = "dendrite";
+  age.secrets.credentials-dendrite-private-key.mode = "777";
   age.secrets.credentials-dendrite-ldap-password.file =
     "${self}/secrets/credentials/dendrite-ldap-password.age";
-  age.secrets.credentials-dendrite-ldap-password.owner = "dendrite";
+  age.secrets.credentials-dendrite-ldap-password.mode = "777";
   age.secrets.credentials-dendrite-turn-secret.file =
     "${self}/secrets/credentials/dendrite-turn-secret.age";
-  age.secrets.credentials-dendrite-turn-secret.owner = "dendrite";
+  age.secrets.credentials-dendrite-turn-secret.mode = "777";
 
   # Matrix server (Dendrite)
   services.dendrite = {
