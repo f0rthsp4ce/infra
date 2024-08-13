@@ -36,12 +36,7 @@ in {
   "secrets/credentials/coturn-secret.age".publicKeys = users ++ [ minibox ];
   "secrets/credentials/mautrix-telegram-config.age".publicKeys = users
     ++ [ minibox ];
+  "secrets/credentials/dendrite-config.age".publicKeys = users ++ [ minibox ];
   "secrets/credentials/dendrite-private-key.age".publicKeys = users
-    ++ [ minibox ];
-  "secrets/credentials/dendrite-ldap-password.age".publicKeys = users
-    ++ [ minibox ];
-  "secrets/credentials/dendrite-turn-secret.age".publicKeys = users
-    ++ [ minibox ];
-  "secrets/credentials/dendrite-mautrix-telegram.age".publicKeys = users
     ++ [ minibox ];
 }

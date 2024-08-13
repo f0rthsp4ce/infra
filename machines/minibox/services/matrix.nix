@@ -2,69 +2,27 @@
 
 let db = "postgres:///dendrite?host=/run/postgresql";
 in {
+  age.secrets.credentials-dendrite-config.file =
+    "${self}/secrets/credentials/dendrite-config.age";
+  age.secrets.credentials-dendrite-config.mode = "777";
   age.secrets.credentials-dendrite-private-key.file =
     "${self}/secrets/credentials/dendrite-private-key.age";
   age.secrets.credentials-dendrite-private-key.mode = "777";
-  age.secrets.credentials-dendrite-ldap-password.file =
-    "${self}/secrets/credentials/dendrite-ldap-password.age";
-  age.secrets.credentials-dendrite-ldap-password.mode = "777";
-  age.secrets.credentials-dendrite-turn-secret.file =
-    "${self}/secrets/credentials/dendrite-turn-secret.age";
-  age.secrets.credentials-dendrite-turn-secret.mode = "777";
-  age.secrets.credentials-dendrite-mautrix-telegram.file =
-    "${self}/secrets/credentials/dendrite-mautrix-telegram.age";
-  age.secrets.credentials-dendrite-mautrix-telegram.mode = "777";
 
   # Matrix server (Dendrite)
   services.dendrite = {
     enable = true;
-    httpPort = 8008;
     loadCredential = [
       "private_key:${config.age.secrets.credentials-dendrite-private-key.path}"
-      "ldap_password:${config.age.secrets.credentials-dendrite-ldap-password.path}"
-      "turn_secret:${config.age.secrets.credentials-dendrite-turn-secret.path}"
     ];
+    # Has no effect, because we override it in the systemd service
     settings = {
       global.server_name = "f0rth.space";
       global.private_key = "$CREDENTIALS_DIRECTORY/private_key";
-      global.database.max_open_conns = 20;
-      user_api.device_database.connection_string = db;
-      user_api.account_database.connection_string = db;
-      sync_api.search.enable = true;
-      sync_api.database.connection_string = db;
-      settings.room_server.database.connection_string = db;
-      relay_api.database.connection_string = db;
-      mscs.database.connection_string = db;
-      media_api.database.connection_string = db;
-      key_server.database.connection_string = db;
-      federation_api.database.connection_string = db;
-      app_service_api = {
-        database.connection_string = db;
-        config_files = [
-          "${config.age.secrets.credentials-dendrite-mautrix-telegram.path}"
-        ];
-      };
-      client_api.turn = {
-        turn_user_lifetime = "5m";
-        turn_uris = [
-          "turn:turn.f0rth.space?transport=udp"
-          "turn:turn.f0rth.space?transport=tcp"
-        ];
-        turn_shared_secret = "$CREDENTIALS_DIRECTORY/turn_secret";
-      };
-      ldap = {
-        enabled = true;
-        uri = "ldap://ldap.lo.f0rth.space:389";
-        base_dn = "dc=f0rth,dc=space";
-        admin_bind_enabled = true;
-        admin_bind_dn = "cn=admin,dc=f0rth,dc=space";
-        admin_bind_password = "$CREDENTIALS_DIRECTORY/ldap_password";
-        search_base_dn = "ou=users,dc=f0rth,dc=space";
-        search_filter = "(&(objectclass=customPerson)(cn={username}))";
-        search_attribute = "cn";
-      };
     };
   };
+  systemd.services.dendrite.serviceConfig.ExecStart = lib.mkForce
+    "${pkgs.dendrite}/bin/dendrite --config ${config.age.secrets.credentials-dendrite-config.path}";
 
   # Matrix bridge
   age.secrets.credentials-mautrix-telegram-config.file =
