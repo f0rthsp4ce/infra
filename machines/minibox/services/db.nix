@@ -4,11 +4,17 @@
   services.postgresql = {
     enable = true;
 
-    ensureUsers = [{
-      name = "mautrix-telegram";
-      ensureDBOwnership = true;
-    }];
-    ensureDatabases = [ "mautrix-telegram" ];
+    ensureUsers = [
+      {
+        name = "dendrite";
+        ensureDBOwnership = true;
+      }
+      {
+        name = "mautrix-telegram";
+        ensureDBOwnership = true;
+      }
+    ];
+    ensureDatabases = [ "dendrite" "mautrix-telegram" ];
   };
 
   services.postgresqlBackup = {

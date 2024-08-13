@@ -1,17 +1,60 @@
-{ config, self, pkgs, lib, conduit, ... }:
+{ config, self, pkgs, lib, ... }:
 
-{
-  age.secrets.credentials-conduit-config.file =
-    "${self}/secrets/credentials/conduit-config.age";
-  age.secrets.credentials-conduit-config.mode = "777";
-  services.matrix-conduit = {
+let db = "postgres:///dendrite?host=/run/postgresql";
+in {
+  age.secrets.credentials-dendrite-private-key.file =
+    "${self}/secrets/credentials/dendrite-private-key.age";
+  age.secrets.credentials-dendrite-private-key.owner = "dendrite";
+  age.secrets.credentials-dendrite-ldap-password.file =
+    "${self}/secrets/credentials/dendrite-ldap-password.age";
+  age.secrets.credentials-dendrite-ldap-password.owner = "dendrite";
+  age.secrets.credentials-dendrite-turn-secret.file =
+    "${self}/secrets/credentials/dendrite-turn-secret.age";
+  age.secrets.credentials-dendrite-turn-secret.owner = "dendrite";
+
+  # Matrix server (Dendrite)
+  services.dendrite = {
     enable = true;
-    package = pkgs.conduit;
-    settings.global.server_name =
-      "f0rth.space"; # makes no differnce, because config is overridden by the config file
-  };
-  systemd.services.conduit.environment = lib.mkForce {
-    CONDUIT_CONFIG = config.age.secrets.credentials-conduit-config.path;
+    httpPort = 8008;
+    loadCredential = [
+      "private_key:${config.age.secrets.credentials-dendrite-private-key.path}"
+      "ldap_password:${config.age.secrets.credentials-dendrite-ldap-password.path}"
+      "turn_secret:${config.age.secrets.credentials-dendrite-turn-secret.path}"
+    ];
+    settings = {
+      global.server_name = "f0rth.space";
+      global.private_key = "$CREDENTIALS_DIRECTORY/private_key";
+      user_api.device_database.connection_string = db;
+      user_api.account_database.connection_string = db;
+      sync_api.search.enable = true;
+      sync_api.database.connection_string = db;
+      settings.room_server.database.connection_string = db;
+      relay_api.database.connection_string = db;
+      mscs.database.connection_string = db;
+      media_api.database.connection_string = db;
+      key_server.database.connection_string = db;
+      federation_api.database.connection_string = db;
+      app_service_api.database.connection_string = db;
+      client_api.turn = {
+        turn_user_lifetime = "5m";
+        turn_uris = [
+          "turn:turn.f0rth.space?transport=udp"
+          "turn:turn.f0rth.space?transport=tcp"
+        ];
+        turn_shared_secret = "$CREDENTIALS_DIRECTORY/turn_secret";
+      };
+      ldap = {
+        enabled = true;
+        uri = "ldap://ldap.lo.f0rth.space:389";
+        base_dn = "dc=f0rth,dc=space";
+        admin_bind_enabled = true;
+        admin_bind_dn = "cn=admin,dc=f0rth,dc=space";
+        admin_bind_password = "$CREDENTIALS_DIRECTORY/ldap_password";
+        search_base_dn = "ou=users,dc=f0rth,dc=space";
+        search_filter = "(&(objectclass=customPerson)(cn={username}))";
+        search_attribute = "cn";
+      };
+    };
   };
 
   # Matrix bridge
@@ -25,9 +68,7 @@
 
     settings = {
       homeserver = {
-        address = "http://[::1]:${
-            toString config.services.matrix-conduit.settings.global.port
-          }";
+        address = "http://localhost:8008";
         domain = "f0rth.space";
       };
       appservice = {
@@ -130,14 +171,8 @@
   networking.firewall.allowedTCPPorts = [ 3478 5349 ];
   networking.firewall.allowedUDPPorts = [ 3478 5349 ];
 
-  services.proxmox-backup.jobs.daily.paths = [
-    {
-      name = "matrix-conduit";
-      path = config.services.matrix-conduit.settings.global.database_path;
-    }
-    {
-      name = "mautrix-telegram";
-      path = "/var/lib/mautrix-telegram";
-    }
-  ];
+  services.proxmox-backup.jobs.daily.paths = [{
+    name = "mautrix-telegram";
+    path = "/var/lib/mautrix-telegram";
+  }];
 }

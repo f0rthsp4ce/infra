@@ -6,4 +6,5 @@ pkgs:
   dyndns-cloudflare = pkgs.callPackage ./dyndns-cloudflare { };
   autodns = pkgs.callPackage ./autodns { };
   element-f0rth-space = pkgs.callPackage ./element.nix { };
+  dendrite = pkgs.callPackage ./dendrite.nix { };
 }

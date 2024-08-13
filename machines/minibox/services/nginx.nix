@@ -187,16 +187,13 @@ in {
       locations."/".return = "301 https://element.f0rth.space";
 
       locations."/_matrix/" = {
-        proxyPass = "http://backend_conduit$request_uri";
+        proxyPass = "http://localhost:8008";
         proxyWebsockets = true;
         extraConfig = ''
           proxy_set_header Host $host;
           proxy_buffering off;
 
-          client_max_body_size ${
-            toString
-            config.services.matrix-conduit.settings.global.max_request_size
-          };
+          client_max_body_size 16M;
         '';
       };
 
@@ -352,14 +349,6 @@ in {
           proxy_pass $proxy;
         }
       '';
-    };
-
-    upstreams.backend_conduit = {
-      servers = {
-        "[::1]:${
-          toString config.services.matrix-conduit.settings.global.port
-        }" = { };
-      };
     };
   };
 
