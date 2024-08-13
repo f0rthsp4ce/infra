@@ -27,6 +27,7 @@ in {
     settings = {
       global.server_name = "f0rth.space";
       global.private_key = "$CREDENTIALS_DIRECTORY/private_key";
+      global.database.max_open_conns = 20;
       user_api.device_database.connection_string = db;
       user_api.account_database.connection_string = db;
       sync_api.search.enable = true;
