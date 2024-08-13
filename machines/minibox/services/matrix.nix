@@ -8,6 +8,9 @@ in {
   age.secrets.credentials-dendrite-private-key.file =
     "${self}/secrets/credentials/dendrite-private-key.age";
   age.secrets.credentials-dendrite-private-key.mode = "777";
+  age.secrets.credentials-dendrite-mautrix-telegram.file =
+    "${self}/secrets/credentials/dendrite-mautrix-telegram.age";
+  age.secrets.credentials-dendrite-mautrix-telegram.mode = "777";
 
   # Matrix server (Dendrite)
   services.dendrite = {
