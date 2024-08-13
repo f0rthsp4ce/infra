@@ -42,4 +42,6 @@ in {
     ++ [ minibox ];
   "secrets/credentials/dendrite-turn-secret.age".publicKeys = users
     ++ [ minibox ];
+  "secrets/credentials/dendrite-mautrix-telegram.age".publicKeys = users
+    ++ [ minibox ];
 }

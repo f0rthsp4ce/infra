@@ -11,6 +11,9 @@ in {
   age.secrets.credentials-dendrite-turn-secret.file =
     "${self}/secrets/credentials/dendrite-turn-secret.age";
   age.secrets.credentials-dendrite-turn-secret.mode = "777";
+  age.secrets.credentials-dendrite-mautrix-telegram.file =
+    "${self}/secrets/credentials/dendrite-mautrix-telegram.age";
+  age.secrets.credentials-dendrite-mautrix-telegram.mode = "777";
 
   # Matrix server (Dendrite)
   services.dendrite = {
@@ -34,7 +37,12 @@ in {
       media_api.database.connection_string = db;
       key_server.database.connection_string = db;
       federation_api.database.connection_string = db;
-      app_service_api.database.connection_string = db;
+      app_service_api = {
+        database.connection_string = db;
+        config_files = [
+          "${config.age.secrets.credentials-dendrite-mautrix-telegram.path}"
+        ];
+      };
       client_api.turn = {
         turn_user_lifetime = "5m";
         turn_uris = [
