@@ -1,12 +1,5 @@
-{ lib
-, stdenv
-, buildGoModule
-, fetchFromGitHub
-, nix-update-script
-, nixosTests
-, postgresql
-, postgresqlTestHook
-}:
+{ lib, stdenv, buildGoModule, fetchFromGitHub, nix-update-script, nixosTests
+, postgresql, postgresqlTestHook }:
 
 buildGoModule rec {
   pname = "matrix-dendrite";
@@ -38,10 +31,7 @@ buildGoModule rec {
     # "cmd/dendrite-demo-yggdrasil"
   ];
 
-  nativeCheckInputs = [
-    postgresqlTestHook
-    postgresql
-  ];
+  nativeCheckInputs = [ postgresqlTestHook postgresql ];
 
   postgresqlTestUserOptions = "LOGIN SUPERUSER";
   preCheck = ''
@@ -54,17 +44,15 @@ buildGoModule rec {
   # PostgreSQL's request for a shared memory segment exceeded your kernel's SHMALL parameter
   doCheck = !stdenv.isDarwin;
 
-  passthru.tests = {
-    inherit (nixosTests) dendrite;
-  };
-  passthru.updateScript = nix-update-script {
-    extraArgs = [ "--version-regex" "v(.+)" ];
-  };
+  passthru.tests = { inherit (nixosTests) dendrite; };
+  passthru.updateScript =
+    nix-update-script { extraArgs = [ "--version-regex" "v(.+)" ]; };
 
   meta = with lib; {
     homepage = "https://matrix-org.github.io/dendrite";
     description = "Second-generation Matrix homeserver written in Go";
-    changelog = "https://github.com/matrix-org/dendrite/releases/tag/v${version}";
+    changelog =
+      "https://github.com/matrix-org/dendrite/releases/tag/v${version}";
     license = licenses.asl20;
     maintainers = teams.matrix.members;
     platforms = platforms.unix;
