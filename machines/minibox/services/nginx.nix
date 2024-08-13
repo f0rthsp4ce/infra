@@ -187,13 +187,18 @@ in {
       locations."/".return = "301 https://element.f0rth.space";
 
       locations."/_matrix/" = {
-        proxyPass = "http://localhost:8008$request_uri";
-        proxyWebsockets = true;
+        proxyPass = "http://localhost:8008";
         extraConfig = ''
           proxy_set_header Host $host;
-          proxy_buffering off;
+          proxy_read_timeout 600;
 
           client_max_body_size 16M;
+        '';
+      };
+
+      locations."/.well-known/matrix/server" = {
+        extraConfig = ''
+          return 200 '{ "m.server": "matrix.f0rth.space:443" }';
         '';
       };
 
