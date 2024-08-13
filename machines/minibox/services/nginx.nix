@@ -189,7 +189,6 @@ in {
       locations."/_matrix/" = {
         proxyPass = "http://localhost:8008";
         extraConfig = ''
-          proxy_set_header Host $host;
           proxy_read_timeout 600;
 
           client_max_body_size 16M;
