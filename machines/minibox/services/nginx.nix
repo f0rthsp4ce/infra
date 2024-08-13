@@ -183,6 +183,36 @@ in {
       extraConfig = proxy-extra-config;
     };
 
+    virtualHosts."matrix.f0rth.space" = proxy // {
+      locations."/".return = "301 https://element.f0rth.space";
+
+      locations."/_matrix/" = {
+        proxyPass = "http://backend_conduit$request_uri";
+        proxyWebsockets = true;
+        extraConfig = ''
+          proxy_set_header Host $host;
+          proxy_buffering off;
+
+          client_max_body_size ${
+            toString
+            config.services.matrix-conduit.settings.global.max_request_size
+          };
+        '';
+      };
+
+      extraConfig = ''
+        merge_slashes off;
+      '';
+    };
+
+    virtualHosts."element.f0rth.space" = proxy // {
+      root = pkgs.element-f0rth-space;
+      extraConfig = ''
+        gzip_static on;
+        brotli_static on;
+      '';
+    };
+
     virtualHosts."*.secure.f0rth.space" = proxy // {
       # <subdomain>--<port>-<args>.secure.f0rth.space
       # Redirects to <subdomain>.lo.f0rth.space:<port> with optional args
@@ -322,6 +352,14 @@ in {
           proxy_pass $proxy;
         }
       '';
+    };
+
+    upstreams.backend_conduit = {
+      servers = {
+        "[::1]:${
+          toString config.services.matrix-conduit.settings.global.port
+        }" = { };
+      };
     };
   };
 

@@ -11,5 +11,7 @@
     ./dyndns.nix
     ./autodns.nix
     ./uptime.nix
+    ./matrix.nix
+    ./db.nix
   ];
 }

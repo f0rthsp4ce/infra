@@ -33,4 +33,8 @@ in {
   "secrets/credentials/f0runald.age".publicKeys = users ++ [ vmbox ];
   "secrets/credentials/botka-v0.age".publicKeys = users ++ [ vmbox ];
   "secrets/credentials/botka-v1.age".publicKeys = users ++ [ vmbox ];
+  "secrets/credentials/conduit-config.age".publicKeys = users ++ [ vmbox ];
+  "secrets/credentials/coturn-secret.age".publicKeys = users ++ [ vmbox ];
+  "secrets/credentials/mautrix-telegram-config.age".publicKeys = users
+    ++ [ vmbox ];
 }

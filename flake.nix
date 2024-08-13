@@ -33,6 +33,11 @@
       url = "github:f0rthsp4ce/botka/cofob/ldap";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    conduit = {
+      url = "gitlab:famedly/conduit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, flake-utils, agenix, deploy-rs, ... }@attrs:
