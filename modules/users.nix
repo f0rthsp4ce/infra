@@ -1,11 +1,11 @@
-{ config, self, home-manager, cofob-home, ... }:
+{ config, self, ... }:
 
 let user-keys = import "${self}/ssh-keys.nix";
 in {
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 
-  home-manager.users.cofob = cofob-home.nixosModules.home-headless;
+  home-manager.users.cofob = import "${self}/home/cofob";
   home-manager.users.def = import "${self}/home/def";
   home-manager.users.tar = import "${self}/home/tar";
   home-manager.users.mike = import "${self}/home/mike";

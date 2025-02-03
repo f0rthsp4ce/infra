@@ -95,6 +95,8 @@ in {
     ffmpeg # if converting animated stickers to webm (very slow!)
   ];
 
+  nixpkgs.config.permittedInsecurePackages = [ "olm-3.2.16" ];
+
   # TURN server
   age.secrets.credentials-coturn-secret.file =
     "${self}/secrets/credentials/coturn-secret.age";
