@@ -55,11 +55,11 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla_2"
       },
       "locked": {
-        "lastModified": 1743256625,
-        "narHash": "sha256-e3oKSBC54FBr65I3ZOV92Wqe+A3xH9E/upt1xwxqV6E=",
+        "lastModified": 1743262132,
+        "narHash": "sha256-vJjIlwtCo8cQKe8MS+UK/ZlvVyb2TBdm0g19zxzUh5g=",
         "owner": "f0rthsp4ce",
         "repo": "botka",
-        "rev": "cb583862782b3d3ac4add661b8370926416f08c0",
+        "rev": "f125ca818be3fbeb8f92567cdf0375ae397f1e91",
         "type": "github"
       },
       "original": {
