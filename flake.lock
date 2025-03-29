@@ -55,15 +55,16 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla_2"
       },
       "locked": {
-        "lastModified": 1738606270,
-        "narHash": "sha256-hyk/82eqx5oC5ZYRDnQfDPfEskapp1BiERvtRUsTg+U=",
+        "lastModified": 1743256625,
+        "narHash": "sha256-e3oKSBC54FBr65I3ZOV92Wqe+A3xH9E/upt1xwxqV6E=",
         "owner": "f0rthsp4ce",
         "repo": "botka",
-        "rev": "f30d1f9b9ce07d9b4afb851b21dbe955ec83e1f4",
+        "rev": "cb583862782b3d3ac4add661b8370926416f08c0",
         "type": "github"
       },
       "original": {
         "owner": "f0rthsp4ce",
+        "ref": "cofob/ssh-keys",
         "repo": "botka",
         "type": "github"
       }
