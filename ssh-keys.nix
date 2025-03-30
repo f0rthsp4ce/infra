@@ -1,8 +1,10 @@
 {
   cofob = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJsSKOtKRM9+bvCs6iioOrcayMdsdwaQN/lJAQJkXE+w cofob@yubi"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAzB+g6qthKy95lG3UxnikrHCaVZ9O9njEqzdCIIfXxL cofob@twinkpad"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIETMEzhigdZelWae3V4tQ7/LXsub39SRG2X+jPMeoHMx cofob@deprecated-key"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFg9JjdQH3neby5z1IWB8xlMzWtfnaWvTJX82+p+Qapp cofob@twinkpad2"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF7CLYytkk6jmtr0LXaIb6CtnpaL5YX3HKXKCAxQyhvn cofob@katana"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIExfGCQE5rcchNNv7IVc5mIn1A6QGZ/eLrDIW0mJaXTm cofob@mac"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILwLbr2pWwVTio+ta0o3miV8BkxlRM8ulwUWboPgPT0T cofob@pixel-termius"
   ];
   dettlaff = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAM0EtUB3ZtA1Y37qiwNUNAbEbF6sn9ZVg4AW++SmuOu"
