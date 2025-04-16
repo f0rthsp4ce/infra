@@ -10,8 +10,6 @@
 
   custom.backup-defaults.enable = true;
 
-  services.cloudflared.enable = true;
-
   networking.firewall.allowedTCPPorts = [
     22 # ssh
   ];
