@@ -55,17 +55,17 @@
         "nixpkgs-mozilla": "nixpkgs-mozilla_2"
       },
       "locked": {
-        "lastModified": 1744926028,
-        "narHash": "sha256-uAWsmCl6gALFLMUZ6EaDi3J1y/Md5aEOvODLXrYDme0=",
+        "lastModified": 1744926861,
+        "narHash": "sha256-vEc5JLwW2OIF1TcAC32YcjhbCYe07Me2TXpkNW8d3vA=",
         "owner": "f0rthsp4ce",
         "repo": "botka",
-        "rev": "f183fbae16728a21d50bd23913dcefa46107175f",
+        "rev": "b4c8dd9843adb50c62abfa81ede74ac94c1b87a2",
         "type": "github"
       },
       "original": {
         "owner": "f0rthsp4ce",
-        "ref": "cofob/borrowed-return",
         "repo": "botka",
+        "rev": "b4c8dd9843adb50c62abfa81ede74ac94c1b87a2",
         "type": "github"
       }
     },
@@ -185,10 +185,7 @@
     },
     "flake-parts_2": {
       "inputs": {
-        "nixpkgs-lib": [
-          "botka-v1",
-          "nixpkgs"
-        ]
+        "nixpkgs-lib": "nixpkgs-lib"
       },
       "locked": {
         "lastModified": 1738453229,
@@ -307,6 +304,18 @@
         "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
+      }
+    },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1744926960,
+        "narHash": "sha256-vJzFZGaCpnmo7I6i416HaBLpC+hvcURh/BQwROcGIp8=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/072a6db25e947df2f31aab9eccd0ab75d5b2da11.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/072a6db25e947df2f31aab9eccd0ab75d5b2da11.tar.gz"
       }
     },
     "nixpkgs-mozilla": {
