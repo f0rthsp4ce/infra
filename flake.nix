@@ -20,7 +20,7 @@
 
     botka-v0.url =
       "github:f0rthsp4ce/botka/4ada593690610da9a7105913c9564b9f673c267e";
-    botka-v1.url = "github:f0rthsp4ce/botka/cofob/ssh-keys";
+    botka-v1.url = "github:f0rthsp4ce/botka/cofob/borrowed-return";
   };
 
   outputs = { self, nixpkgs, flake-utils, agenix, deploy-rs, ... }@attrs:
