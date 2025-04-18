@@ -20,8 +20,7 @@
 
     botka-v0.url =
       "github:f0rthsp4ce/botka/4ada593690610da9a7105913c9564b9f673c267e";
-    botka-v1.url =
-      "github:f0rthsp4ce/botka/b4c8dd9843adb50c62abfa81ede74ac94c1b87a2";
+    botka-v1.url = "github:f0rthsp4ce/botka/cofob/nlp";
   };
 
   outputs = { self, nixpkgs, flake-utils, agenix, deploy-rs, ... }@attrs:
