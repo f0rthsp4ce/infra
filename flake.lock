@@ -55,11 +55,11 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1745015593,
-        "narHash": "sha256-dGe4RrSvp5W2MVRHKjFRuzlGcGlaRR1x996CbUVp7rc=",
+        "lastModified": 1745015872,
+        "narHash": "sha256-Cndvz1b+MNBZ5rQZflLytJ6FTEdqMGo0x0x4RTpCG6Q=",
         "owner": "f0rthsp4ce",
         "repo": "botka",
-        "rev": "fe6b848dde511edaf66a197d24d8b76513e6dbdb",
+        "rev": "aa9764f40f256b676953c3306f6245f4366115f3",
         "type": "github"
       },
       "original": {
