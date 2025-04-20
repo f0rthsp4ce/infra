@@ -55,15 +55,16 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1745172312,
-        "narHash": "sha256-jC8OWYjFhwQns4HCVkyf85u3MNkh4EMFfvtxFexkIsQ=",
+        "lastModified": 1745191124,
+        "narHash": "sha256-ss5wG5mIej70oNBM0mDdwjOj1NIv1jkg/YOCyVao+Kg=",
         "owner": "f0rthsp4ce",
         "repo": "botka",
-        "rev": "805b1c7dcffecf1c7612ad9cd6661ba2f448da0d",
+        "rev": "3644441825f5035c86f35d01fce07a032060a33d",
         "type": "github"
       },
       "original": {
         "owner": "f0rthsp4ce",
+        "ref": "cofob/nlp-classification",
         "repo": "botka",
         "type": "github"
       }
