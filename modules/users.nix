@@ -9,6 +9,7 @@ in {
   home-manager.users.def = import "${self}/home/def";
   home-manager.users.tar = import "${self}/home/tar";
   home-manager.users.mike = import "${self}/home/mike";
+  home-manager.users.anatoly = import "${self}/home/anatoly";
 
   age.secrets.password-root.file = "${self}/secrets/passwords/root.age";
   age.secrets.password-cofob.file = "${self}/secrets/passwords/cofob.age";
@@ -50,6 +51,14 @@ in {
         uid = 1004;
         hashedPasswordFile = config.age.secrets.password-mike.path;
         openssh.authorizedKeys.keys = user-keys.mike;
+      };
+      anatoly = {
+        isNormalUser = true;
+        description = "Anatoly Ivanov";
+        extraGroups = [ "wheel" ];
+        uid = 1005;
+        hashedPasswordFile = config.age.secrets.password-root.path;  # TODO: change
+        openssh.authorizedKeys.keys = user-keys.anatoly;
       };
     };
   };
