@@ -57,8 +57,7 @@ in {
         description = "Anatoly Ivanov";
         extraGroups = [ "wheel" ];
         uid = 1005;
-        hashedPasswordFile =
-          config.age.secrets.password-root.path; # TODO: change
+        hashedPasswordFile = config.age.secrets.password-root.path; # TODO: change
         openssh.authorizedKeys.keys = user-keys.anatoly;
       };
     };
