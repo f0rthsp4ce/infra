@@ -142,6 +142,8 @@ in {
 
         # ---- CSP (wide-open; dangerous by design) ----
         add_header Content-Security-Policy "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;" always;
+
+        add_header Content-Type "text/html" always;
       '';
     };
   };
