@@ -136,20 +136,14 @@ in {
     virtualHosts."conncheck.lo.f0rth.space" = defaults // {
       locations."/".return = "200 ok";
       extraConfig = ''
-        add_header 'Access-Control-Allow-Origin' '*' always;
-        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
-        add_header 'Access-Control-Allow-Headers' '*' always;
+        # ---- CORS (allow all) ----
+        add_header Access-Control-Allow-Origin "*" always;
+        add_header Access-Control-Allow-Methods "GET, POST, OPTIONS, PUT, DELETE" always;
+        # Reflect requested headers back (more compatible than "*")
+        add_header Access-Control-Allow-Headers "$http_access_control_request_headers" always;
+        add_header Access-Control-Max-Age "3600" always;
 
-        # Preflight requests
-        if ($request_method = OPTIONS) {
-            add_header 'Access-Control-Allow-Origin' '*' always;
-            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
-            add_header 'Access-Control-Allow-Headers' '*' always;
-            add_header 'Access-Control-Max-Age' 3600;
-            return 204;
-        }
-
-        # --- Content Security Policy: Allow everything ---
+        # ---- CSP (wide-open; dangerous by design) ----
         add_header Content-Security-Policy "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;" always;
       '';
     };
