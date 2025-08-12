@@ -131,6 +131,27 @@ in {
     virtualHosts."ldapadmin.lo.f0rth.space" = defaults // {
       locations."/".proxyPass = "https://localhost:6443";
     };
+
+    virtualHosts."conncheck.lo.f0rth.space" = defaults // {
+      locations."/".return = "200 ok";
+      extraConfig = ''
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+        add_header 'Access-Control-Allow-Headers' '*' always;
+
+        # Preflight requests
+        if ($request_method = OPTIONS) {
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS, PUT, DELETE' always;
+            add_header 'Access-Control-Allow-Headers' '*' always;
+            add_header 'Access-Control-Max-Age' 3600;
+            return 204;
+        }
+
+        # --- Content Security Policy: Allow everything ---
+        add_header Content-Security-Policy "default-src * 'unsafe-inline' 'unsafe-eval' data: blob:;" always;
+      '';
+    };
   };
 
   networking.firewall = {
