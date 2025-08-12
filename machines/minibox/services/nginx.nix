@@ -99,9 +99,6 @@ in {
 
     virtualHosts."grafana.lo.f0rth.space" = defaults // {
       locations."/".proxyPass = "http://127.0.0.1:3001";
-      extraConfig = ''
-        add_header Content-Security-Policy "default-src 'self'; connect-src 'self' https://grafana.f0rth.space;";
-      '';
     };
 
     virtualHosts."prometheus.lo.f0rth.space" = defaults // {
