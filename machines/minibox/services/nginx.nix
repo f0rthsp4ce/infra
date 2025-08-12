@@ -37,6 +37,7 @@ in {
 
   services.nginx = {
     enable = true;
+    validateConfigFile = false;
 
     virtualHosts."not_found" = {
       listen = [
