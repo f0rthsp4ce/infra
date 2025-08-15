@@ -30,9 +30,9 @@ in {
       '';
       EnvironmentFile = config.age.secrets.credentials-minibox-cloudflared.path;
       Restart = "always";
-      RestartSec=60
-      StartLimitIntervalSec=60
-      StartLimitBurst=10
+      RestartSec = 60;
+      StartLimitIntervalSec = 60;
+      StartLimitBurst = 10;
       User = "cloudflared";
       Group = "cloudflared";
     };
