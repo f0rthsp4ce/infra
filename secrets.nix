@@ -2,7 +2,7 @@ let
   user-keys = import ./ssh-keys.nix;
 
   users = user-keys.cofob ++ user-keys.dettlaff ++ user-keys.tar-xzf
-    ++ user-keys.mike;
+    ++ user-keys.mike ++ user-keys.skywinder;
 
   minibox =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCGY+yafid8DBeWFwXO5q/aSCgLvv726NKEO3KJeThC";
